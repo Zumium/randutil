@@ -53,7 +53,7 @@ func TestIntRange(t *testing.T) {
 	// Check that we get an error when min > max
 	i, err = IntRange(max, min)
 	if err != MinMaxError {
-		msg := fmt.Sprintf("Expected error when min > max, but got:", err)
+		msg := fmt.Sprintf("Expected error when min > max, but got: %s", err)
 		t.Error(msg)
 	}
 }
@@ -110,10 +110,10 @@ func TestChoice(t *testing.T) {
 // returned more often than choices with a lower weight.
 func TestWeightedChoice(t *testing.T) {
 	// Make weighted choices
-	var choices []Choice
-	chosenCount := make(map[Choice]int)
+	var choices []*Choice
+	chosenCount := make(map[*Choice]int)
 	for i := 0; i < 10; i++ {
-		c := Choice{
+		c := &Choice{
 			Weight: i,
 			Item:   i,
 		}
@@ -172,7 +172,7 @@ func BenchmarkIntRange(b *testing.B) {
 func BenchmarkWeightedChoice(b *testing.B) {
 	// Create some random choices and weights before we start
 	b.StopTimer()
-	choices := []Choice{}
+	choices := make([]*Choice, 0)
 	for i := 0; i < 100; i++ {
 		s, err := AlphaString(64)
 		if err != nil {
@@ -182,7 +182,7 @@ func BenchmarkWeightedChoice(b *testing.B) {
 		if err != nil {
 			b.Error(err)
 		}
-		c := Choice{
+		c := &Choice{
 			Item:   s,
 			Weight: w,
 		}

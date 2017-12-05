@@ -16,7 +16,7 @@ const (
 	Alphabet     = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 	Numerals     = "1234567890"
 	Alphanumeric = Alphabet + Numerals
-	Ascii        = Alphanumeric + "~!@#$%^&*()-_+={}[]\\|<,>.?/\"';:`"
+	//Ascii        = Alphanumeric + "~!@#$%^&*()-_+={}[]\\|<,>.?/\"';:`"
 )
 
 var MinMaxError = errors.New("Min cannot be greater than max.")
@@ -118,10 +118,10 @@ type Choice struct {
 // relative.  E.g. if you have two choices both weighted 3, they will be
 // returned equally often; and each will be returned 3 times as often as a
 // choice weighted 1.
-func WeightedChoice(choices []Choice) (Choice, error) {
+func WeightedChoice(choices []*Choice) (*Choice, error) {
 	// Based on this algorithm:
 	//     http://eli.thegreenplace.net/2010/01/22/weighted-random-generation-in-python/
-	var ret Choice
+	var ret *Choice
 	sum := 0
 	for _, c := range choices {
 		sum += c.Weight
